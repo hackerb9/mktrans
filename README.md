@@ -1,14 +1,18 @@
 # mktrans
-Make background transparent using antialiased alpha channel
+    Convert images into shaped transparent pngs by floodfilling
+    the background with transparency (antialiased alpha channel).
+    Top left pixel is assumed to be the background color.
 
-mktrans: Convert images into shaped transparent pngs by floodfilling
-	 the background with transparency (antialiased alpha channel).
-         Top left pixel is assumed to be the background color.
+![ImageMagick logo](https://i.imgur.com/gTtaEQt.png)
+![After running through mktrans](https://i.imgur.com/Exrm0tD.png)
+![After flattening on a saddle brown background](https://i.imgur.com/PReCAca.png)
 
-Usage: mktrans <files ... >
+# Usage
+
+    Usage: mktrans <files ... >
 
 Output filenames will be the same as input, except suffixed with
-"-transparent.png". E.g., 'mktrans foo.gif bar.jpg' creates
+"-transparent.png". E.g., `mktrans foo.gif bar.jpg` creates
 foo-transparent.png and bar-transparent.png.
 
 This is similar to ImageMagick's bg_removal script, but much higher
