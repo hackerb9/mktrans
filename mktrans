@@ -34,7 +34,7 @@ EOF
 
 # Fuzz is how far off the color can be (in percent).
 # This is important for getting good antialiasing.
-fuzz=30
+fuzz=15
 
 [[ "$#" != 0 ]] || usage
 
