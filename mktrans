@@ -13,7 +13,7 @@
 
 # Fuzz is how far off the background color can be (in percent).
 # This is important for getting good antialiasing.
-defaultfuzz=15
+defaultfuzz=20
 
 usage() {
     cat <<EOF
