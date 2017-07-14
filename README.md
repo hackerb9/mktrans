@@ -4,9 +4,7 @@
     the background with transparency (antialiased alpha channel).
     Top left pixel is assumed to be the background color.
 
-![ImageMagick logo](https://i.imgur.com/gTtaEQt.png)
-![After running through mktrans](https://i.imgur.com/PReCAca.png)
-![After flattening on a saddle brown background](https://i.imgur.com/Exrm0tD.png)
+[![After flattening on a saddle brown background](https://i.imgur.com/Exrm0tD.png)](https://i.imgur.com/PReCAca.png)
 
 # Usage
 
