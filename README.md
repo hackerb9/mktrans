@@ -10,7 +10,11 @@
 
 # Usage
 
-    Usage: mktrans <files ... >
+    Usage: mktrans [-f <fuzz>] [-s] [-v] <files ... >
+
+        -f <fuzz>: How loosely to match the background color (default $defaultfuzz%)
+               -s: Use speedy antialiasing (much faster, slightly less acurate) 
+               -v: Verbose
 
 Output filenames will be the same as input, except suffixed with
 "-transparent.png". E.g., `mktrans foo.gif bar.jpg` creates
@@ -28,6 +32,8 @@ For a sample, run these commands:
 Side note: This creates an antialiased (blurred) alpha channel that is
 also eroded by half a pixel to avoid halos. Of course, ImageMagick's
 morphological operations don't (yet?) work at the subpixel level, so
-I am blowing up the alpha channel to 200% before eroding.
+I'm blowing up the alpha channel to 200% before eroding. Since this
+can be slow on large images, consider using the '-s' option which
+skips the subpixel eroding.
 
 ---HackerB9, June 2017
