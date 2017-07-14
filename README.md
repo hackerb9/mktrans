@@ -12,7 +12,7 @@
 
     Usage: mktrans [-f <fuzz>] [-s] [-v] <files ... >
 
-        -f <fuzz>: How loosely to match the background color (default 15%)
+        -f <fuzz>: How loosely to match the background color
                -s: Use speedy antialiasing (much faster, slightly less acurate) 
                -v: Verbose
 
