@@ -22,10 +22,11 @@ mktrans: Convert images into shaped transparent pngs by floodfilling
 	 the background with transparency (antialiased alpha channel).
          Top left pixel is assumed to be the background color.
 
-Usage: mktrans [-f <fuzz>] [-s] [-v] <files ... >
+Usage: mktrans [-f <fuzz>] [-s] [-p <x>,<y>] [-v] <files ... >
 
 	-f <fuzz>: How loosely to match the background color (default $defaultfuzz%)
 	       -s: Use speedy antialiasing (much faster, slightly less acurate) 
+	       -p <x>,<y>: Floodfills from pixel at x,y instead of 0,0
 	       -v: Verbose
 
 Output filenames will be the same as input, except suffixed with
@@ -43,8 +44,10 @@ EOF
 }
 
 fuzz=$defaultfuzz
+pixelcomma="0,0"
+pixelplus="+0+0"
 
-while getopts f:shv name; do
+while getopts f:shp:v name; do
     case $name in
         f) fuzz=$OPTARG
            ;;
@@ -53,6 +56,10 @@ while getopts f:shv name; do
         v) vflag=True
            ;;
         h) usage
+           ;;
+        p) pixelcomma=$OPTARG
+           pixelplus=+${OPTARG%,*}+${OPTARG#*,}
+           pflag=True
            ;;
         *) usage
            ;;
@@ -65,7 +72,7 @@ shift $((OPTIND-1))
 
 for filename; do
     # Get color of top left pixel
-    color=$(convert "$filename" -format "%[pixel:p{0,0}]" info:-)
+    color=$(convert "$filename" -format "%[pixel:p{$pixelxy}]" info:-)
 
     options=""
     # Remove any existing alpha channel
@@ -75,7 +82,7 @@ for filename; do
     # In a new stack, make a copy of the image
     options+=" ( +clone "
     # [copy] floodfill with transparency ("none") starting at top-left
-    options+="   -fuzz $fuzz% -fill none -floodfill +0+0 $color"
+    options+="   -fuzz $fuzz% -fill none -floodfill $pixelplus $color"
     # [copy] extract just the transparency (alpha channel)
     options+="   -alpha extract"
 
@@ -89,7 +96,7 @@ for filename; do
         # [copy] scale the alpha channel back to normal size.
         options+="	-geometry 50%"
     else
-        # [copy] blur the alpha channel to make it antialiased
+        # [copy] blur the alpha channel to make it antialiased (-s: speedy)
         options+="	-blur 0x1"
         # [copy] only antialias inside the figure (<50% opacity => 0% opaque)
         options+="	-level 50%,100%"
