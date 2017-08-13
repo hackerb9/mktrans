@@ -71,12 +71,19 @@ shift $((OPTIND-1))
 
 
 for filename; do
-    # Get color of top left pixel
-    color=$(convert "$filename" -format "%[pixel:p{$pixelxy}]" info:-)
+    # Get color of 0,0 (top left) pixel
+    color=$(convert "$filename" -format "%[pixel:p{$pixelcomma}]" info:-)
+    if [[ "$color" == *rgba*",0)" ]]; then
+	color="${color%,0)},1)"	# Floodfill only works with opaque colors.
+    fi
+    if [[ "$color" == "none" ]]; then
+	echo "Error: $filename: pixel at $pixelcomma is completely transparent. Cannot floodfill." >&2
+	continue
+    fi
 
     options=""
-    # Remove any existing alpha channel
-    options+=" -alpha off"
+    # Remove any existing alpha channel. XXX Wait why am I doing this?
+#    options+=" -alpha off"
     # Add a 1 pixel border so we'll fill from the bottom and sides as well.
     options+=" -bordercolor $color -border 1 "
     # In a new stack, make a copy of the image
