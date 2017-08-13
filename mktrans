@@ -82,10 +82,10 @@ for filename; do
     fi
 
     options=""
-    # Remove any existing alpha channel. XXX Wait why am I doing this?
-#    options+=" -alpha off"
-    # Add a 1 pixel border so we'll fill from the bottom and sides as well.
-    options+=" -bordercolor $color -border 1 "
+    if [ -z "$pflag" ]; then
+	# Add a 1 pixel border so we'll fill from the bottom and sides as well.
+	options+=" -bordercolor $color -border 1 "
+    fi
     # In a new stack, make a copy of the image
     options+=" ( +clone "
     # [copy] floodfill with transparency ("none") starting at top-left
@@ -112,9 +112,11 @@ for filename; do
     options+=" ) "
     # Compose the original image and the copy's alpha channel.
     options+=" -compose CopyOpacity -composite"
-    # Remove the 1 pixel border we added
-    options+=" -shave 1"
-
+    if [ -z "$pflag" ]; then
+	# Remove the 1 pixel border we added
+	options+=" -shave 1"
+    fi
+    
     [ "$vflag" ] && echo convert "$filename" $options "${filename%.*}-transparent.png"
 
     convert "$filename" $options "${filename%.*}-transparent.png"
