@@ -20,14 +20,19 @@ usage() {
 
 mktrans: Convert images into shaped transparent pngs by floodfilling
 	 the background with transparency (antialiased alpha channel).
-         Top left pixel is assumed to be the background color.
 
-Usage: mktrans [-f <fuzz>] [-s] [-p <x>,<y>] [-v] <files ... >
+	 Top left pixel is assumed to be the background color and floodfill
+	 is from image edges, unless a different starting pixel is specified.
+
+Example: mktrans foo.jpg
+
+Usage: mktrans [-f <fuzz>] [-s] [-p <x>,<y>] [-A] [-v] <files ... >
 
 	-f <fuzz>: How loosely to match the background color (default $defaultfuzz%)
 	       -s: Use speedy antialiasing (much faster, slightly less acurate) 
 	       -p <x>,<y>: Floodfills from pixel at x,y instead of 0,0
-	       -v: Verbose
+	       -A: Do not antialias transparency
+	       -v: Verbose (see how 'convert' is being called)
 
 Output filenames will be the same as input, except suffixed with
 "-transparent.png". E.g., 'mktrans foo.gif bar.jpg' creates
@@ -38,7 +43,7 @@ also eroded by half a pixel to avoid halos. Of course, ImageMagick's
 morphological operations don't (yet?) work at the subpixel level, so
 I'm blowing up the alpha channel to 200% before eroding. Since this
 can be slow on large images, consider using the '-s' option which
-skips the subpixel eroding.
+uses a faster, lower quality antialiasing.
 EOF
     exit 0
 }
@@ -47,11 +52,13 @@ fuzz=$defaultfuzz
 pixelcomma="0,0"
 pixelplus="+0+0"
 
-while getopts f:shp:v name; do
+while getopts f:sAhp:v name; do
     case $name in
         f) fuzz=$OPTARG
            ;;
         s) sflag=True
+           ;;
+        A) noantialias=True
            ;;
         v) vflag=True
            ;;
@@ -93,20 +100,22 @@ for filename; do
     # [copy] extract just the transparency (alpha channel)
     options+="		-alpha extract"
 
-    if [ -z "$sflag" ]; then
-        # [copy] blow up the alpha channel so we can do sub-pixel morphology
-        options+="	-geometry 200%"
-        # [copy] blur the alpha channel to make it antialiased
-        options+="	-blur 0x0.5"
-        # [copy] shrink the region that is opaque by half a pixel.
-        options+="	-morphology erode square:1"
-        # [copy] scale the alpha channel back to normal size.
-        options+="	-geometry 50%"
-    else
-        # [copy] blur the alpha channel to make it antialiased (-s: speedy)
-        options+="	-blur 0x1"
-        # [copy] only antialias inside the figure (<50% opacity => 0% opaque)
-        options+="	-level 50%,100%"
+    if [ -z "$noantialias" ]; then
+	if [ -z "$sflag" ]; then
+            # [copy] blow up the alpha channel so we can do sub-pixel morphology
+            options+="	-geometry 200%"
+            # [copy] blur the alpha channel to make it antialiased
+            options+="	-blur 0x0.5"
+            # [copy] shrink the region that is opaque by half a pixel.
+            options+="	-morphology erode square:1"
+            # [copy] scale the alpha channel back to normal size.
+            options+="	-geometry 50%"
+	else	# sflag: speedy antialias
+            # [copy] blur the alpha channel to make it antialiased
+            options+="	-blur 0x1"
+            # [copy] only antialias inside the figure (<50% opacity becomes 0%)
+            options+="	-level 50%,100%"
+	fi
     fi
     # [copy] end the stack.
     options+=" ) "
