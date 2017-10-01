@@ -89,9 +89,9 @@ for filename; do
     # In a new stack, make a copy of the image
     options+=" ( +clone "
     # [copy] floodfill with transparency ("none") starting at top-left
-    options+="   -fuzz $fuzz% -fill none -floodfill $pixelplus $color"
+    options+="		-fuzz $fuzz% -fill none -floodfill $pixelplus $color"
     # [copy] extract just the transparency (alpha channel)
-    options+="   -alpha extract"
+    options+="		-alpha extract"
 
     if [ -z "$sflag" ]; then
         # [copy] blow up the alpha channel so we can do sub-pixel morphology
