@@ -70,11 +70,10 @@ Similar to -s, but does not antialias at all.
 ### About -p <x,y>
 
 'P' specifies which pixel to start floodfilling from, instead of 0,0.
-You probably should just *ignore* this option and use The GIMP for more
-fiddly, complex images. Because `mktrans` keeps any pre-existing
-transparency, you could theoretically use -p to remove any lagoons
-that got missed by a first floodfill. Note the letters 'a' and 'g' in
-the example below.
+You probably should just *ignore* this option and use The GIMP for
+more fiddly, complex images. You could theoretically use -p to remove
+any lagoons that got missed by a first floodfill. Note the letters 'a'
+and 'g' in the example below.
 
     convert logo: foo.png
     mktrans -p 160,100 foo.png
@@ -109,13 +108,14 @@ the start points of the image.
   but is not very satisfactory. Perhaps this script should remove any
   existing transparency before manipulating the image and then add it
   back in at the end. But then again, how often are people going to
-  want to do that?
+  want to do that? The only use I can think of is when using -p.
 
 * Because of the previous bug, if you do use -p to fill lots of
   lagoons, you'll probably want to use -A at the same time.
 
-* It'd be nice if there was a -P option which let the user click on a
-  point (or multiple points) in the image to start the floodfill. 
+* Finding the coordinates for -p is a pain. It'd be nice if there was
+  a -P option which let the user click on a point (or multiple points)
+  in the image to start the floodfill.
 
 ## See Also
 
