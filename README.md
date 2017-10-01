@@ -37,7 +37,7 @@ For a quick sample using the ImageMagick logo, run these commands:
         -f <fuzz>: How loosely to match the background color (default 20%)
                -s: Use speedy antialiasing (much faster, slightly less acurate) 
        -p <x>,<y>: Floodfills from pixel at x,y instead of 0,0
-       	       -A: Do not antialias transparency
+               -A: Do not antialias transparency
                -v: Verbose
 
 Output filenames will be the same as input, except suffixed with
