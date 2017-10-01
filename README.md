@@ -44,7 +44,7 @@ Output filenames will be the same as input, except suffixed with
 `-transparent.png`. E.g., `mktrans foo.gif bar.jpg` creates
 `foo-transparent.png` and `bar-transparent.png`.
 
-### About -f <fuzz>
+### About -f *fuzz*
 
 *Fuzz* is how far off the background color can be (in percent). You
 usually won't have to change this. If fuzz is too high, parts of the
@@ -67,13 +67,14 @@ without the subpixel eroding.
 
 Similar to -s, but does not antialias at all.
 
-### About -p <x,y>
+### About -p *x*,*y*
 
-'P' specifies which pixel to start floodfilling from, instead of 0,0.
-You probably should just *ignore* this option and use The GIMP for
-more fiddly, complex images. You could theoretically use -p to remove
-any lagoons that got missed by a first floodfill. Note the letters 'a'
-and 'g' in the example below.
+*X*,*y* specifies which pixel to start floodfilling from, instead of 0,0.
+You probably should just _ignore_ this option and use The GIMP for
+more fiddly, complex images.
+
+Theoretically you can use -p to remove any lagoons that got missed by
+a first floodfill. Note the letters 'a' and 'g' in the example below.
 
     convert logo: foo.png
     mktrans -p 160,100 foo.png
