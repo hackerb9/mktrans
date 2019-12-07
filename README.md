@@ -30,6 +30,14 @@ For a quick sample using the ImageMagick logo, run these commands:
 
 [![After flattening on a saddle brown background](https://i.imgur.com/Exrm0tD.png)](https://i.imgur.com/PReCAca.png)
 
+## Installation
+
+It's just a shell script, so just download the mktrans file, mark it executable, and put it in your bin directory.
+
+    wget https://github.com/hackerb9/mktrans/raw/master/mktrans
+    chmod +x mktrans
+    mv mktrans /usr/local/bin/
+
 ## All flags and complete usage
 
     Usage: mktrans [-f <fuzz>] [-s] [-v] <files ... >
