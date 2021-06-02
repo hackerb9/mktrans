@@ -38,6 +38,8 @@ It's just a shell script, so just download the mktrans file, mark it executable,
     chmod +x mktrans
     mv mktrans /usr/local/bin/
 
+Note: You will need to have [**imagemagick**](https://imagemagick.org/index.php) for it to work. You can find instructions on how to download it [here](https://imagemagick.org/script/download.php).
+
 ## All flags and complete usage
 
     Usage: mktrans [-f <fuzz>] [-s] [-v] <files ... >
