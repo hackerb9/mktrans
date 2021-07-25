@@ -44,7 +44,7 @@ It's just a shell script, so just download the mktrans file, mark it executable,
 
         -f <fuzz>: How loosely to match the background color (default 20%)
                -s: Use speedy antialiasing (much faster, slightly less acurate) 
-               -S: Do not antialias transparency (useful with repeated runs)
+               -S: Do not antialias transparency (useful for repeated runs)
        -p <x>,<y>: Floodfills from pixel at x,y instead of 0,0
                -v: Verbose
 
@@ -120,6 +120,8 @@ the start points of the image.
 
 * Because of the previous bug, if you do use -p to fill lots of
   lagoons, you'll probably want to use -S at the same time.
+  (Should this be done automatically if the image already has
+  transparency? Yuck, more complexity.)
 
 * Finding the coordinates for -p is a pain. It'd be nice if there was
   a -P option which let the user click on a point (or multiple points)
