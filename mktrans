@@ -28,23 +28,37 @@ Typical usage:
 
 	mktrans foo.jpg		(creates foo-transparent.png)
 
-Usage: mktrans  [-f <fuzz>]  [-s | -S ]  [-p <x>,<y>]  [-v]  <files ... >
+Usage: mktrans  [-f <fuzz>]  [-s|-S]  [-p <x>,<y>]  [-v]  <files ... >
 
 	-f <fuzz>: How loosely to match the background color (default $defaultfuzz%)
 
     	   	   Advanced options:
 	       -s: Use speedy antialiasing (much faster, slightly less acurate) 
-	       -S: Supress antialiasing completely (fast & ugly)
+	       -S: Supress antialiasing completely. (Useful for repeated runs)
 	p <x>,<y>: Floodfill from pixel at x,y instead of 0,0
 	       -v: Verbose
 EOF
 
-# Side note: This creates an antialiased (blurred) alpha channel that is
-# also eroded by half a pixel to avoid halos. ImageMagick's
-# morphological operations don't (yet?) work at the subpixel level, so
-# I'm blowing up the alpha channel to 200% before eroding. Since this
-# can be slow on large images, consider using the '-s' option which
-# uses a faster, lower quality antialiasing.
+# * Side note: This creates an antialiased (blurred) alpha channel
+#   that is also eroded by half a pixel to avoid halos. ImageMagick's
+#   morphological operations don't (yet?) work at the subpixel level,
+#   so I'm blowing up the alpha channel to 200% before eroding. Since
+#   this can be slow on large images, consider using the '-s' option
+#   which uses a faster, lower quality antialiasing.
+
+# * Running this script on an image that already has transparency will
+#   erode the image due to the antialiasing. Using -S is a workaround,
+#   but is not very satisfactory. Perhaps this script should remove any
+#   existing transparency before manipulating the image and then add it
+#   back in at the end. But then again, how often are people going to
+#   want to do that? The only use I can think of is when using -p.
+
+# * Because of the previous bug, if you do use -p to fill lots of
+#   lagoons, you'll probably want to use -A at the same time.
+
+# * Finding the coordinates for -p is a pain. It'd be nice if there was
+#   a -P option which let the user click on a point (or multiple points)
+#   in the image to start the floodfill.
 
     exit 0
 }
@@ -53,13 +67,13 @@ fuzz=$defaultfuzz
 pixelcomma="0,0"
 pixelplus="+0+0"
 
-while getopts f:sAhp:v name; do
+while getopts f:sAShp:v name; do
     case $name in
         f) fuzz=$OPTARG
            ;;
         s) sflag=True
            ;;
-        A) noantialias=True
+        S|A) noantialias=True
            ;;
         v) vflag=True
            ;;
