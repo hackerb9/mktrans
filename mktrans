@@ -20,31 +20,32 @@ usage() {
 
 mktrans: Convert images into shaped transparent pngs by floodfilling
 	 the background with transparency (antialiased alpha channel).
+	 Unless a different starting pixel is specified, the top left
+	 pixel is used as the "background" color to remove and
+	 floodfill starts from all four image edges,
 
-	 Top left pixel is assumed to be the background color and floodfill
-	 is from image edges, unless a different starting pixel is specified.
+Typical usage: 
 
-Example: mktrans foo.jpg
+	mktrans foo.jpg		(creates foo-transparent.png)
 
-Usage: mktrans [-f <fuzz>] [-s] [-p <x>,<y>] [-A] [-v] <files ... >
+Usage: mktrans  [-f <fuzz>]  [-s | -S ]  [-p <x>,<y>]  [-v]  <files ... >
 
 	-f <fuzz>: How loosely to match the background color (default $defaultfuzz%)
+
+    	   	   Advanced options:
 	       -s: Use speedy antialiasing (much faster, slightly less acurate) 
-	       -p <x>,<y>: Floodfills from pixel at x,y instead of 0,0
-	       -A: Do not antialias transparency
-	       -v: Verbose (see how 'convert' is being called)
-
-Output filenames will be the same as input, except suffixed with
-"-transparent.png". E.g., 'mktrans foo.gif bar.jpg' creates
-foo-transparent.png and bar-transparent.png.
-
-Side note: This creates an antialiased (blurred) alpha channel that is
-also eroded by half a pixel to avoid halos. Of course, ImageMagick's
-morphological operations don't (yet?) work at the subpixel level, so
-I'm blowing up the alpha channel to 200% before eroding. Since this
-can be slow on large images, consider using the '-s' option which
-uses a faster, lower quality antialiasing.
+	       -S: Supress antialiasing completely (fast & ugly)
+	p <x>,<y>: Floodfill from pixel at x,y instead of 0,0
+	       -v: Verbose
 EOF
+
+# Side note: This creates an antialiased (blurred) alpha channel that is
+# also eroded by half a pixel to avoid halos. ImageMagick's
+# morphological operations don't (yet?) work at the subpixel level, so
+# I'm blowing up the alpha channel to 200% before eroding. Since this
+# can be slow on large images, consider using the '-s' option which
+# uses a faster, lower quality antialiasing.
+
     exit 0
 }
 
