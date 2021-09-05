@@ -1,15 +1,23 @@
 # Using -S to deal with multiple runs
 
-If you run this script on a file that already has transparency, you'll probably want to use the `-S` option to suppress antialiasing.
-You might want to do multiple runs on a file if you are trying to clear out lagoons by using the `-p x,y` option to specify which pixel to start floodfilling at.
+If you run this script on a file that already has transparency, you'll
+probably want to use the `-S` option to suppress antialiasing. But why
+would you want multiple runs of mktrans on the same file? Because one
+can clear out "lagoons", areas that should have been transparent but
+the floodfill didn't reach them. You do that by using the `-p x,y`
+option to specify which pixel to start floodfilling at.
 
 ## Lagoon problem
 
-Here's an example image which has already been run through `mktrans` once. As you can see, it left a black lagoon in the middle of the loop. 
+Here's an example image which has already been run through `mktrans` once. As you can see, it left a black lagoon in the middle of the loop on this astrolabe. 
 
 <img src="README.md.d/a-transparent.png" align="center" width="50%" alt="After first run of mktrans">
 
 ## Eroded pixels problem
+
+We can find the coordinates of the lagoon by running `display
+a-transparent.png` and clicking the middle mouse button. In this case,
+256,64 is one of the black pixels.
 
 If we did the most obvious thing and just ran
 
