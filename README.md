@@ -1,5 +1,7 @@
 # mktrans
 
+<img src="README.md.d/a-transparent-transparent (with -S).png" alt="Astrolabe" width="33%" align="right">
+
 Convert images into shaped transparent pngs by floodfilling the
 background with transparency (antialiased alpha channel).
 
@@ -75,6 +77,7 @@ eroding. Since this can be slow on large images, consider using the
 ### About -S (Supress antialiasing completely)
 
 Similar to -s, but does not antialias at all. Useful with with -p, below.
+See an example of why you'd use -S in [astrolabe.md](astrolabe.md).
 
 ### About -p *x*,*y*
 
