@@ -1,6 +1,6 @@
-# mktrans
+<img src="README.md.d/a-transparent-transparent (with -S).png" alt="Astrolabe" width="25%" align="right">
 
-<img src="README.md.d/a-transparent-transparent (with -S).png" alt="Astrolabe" width="33%" align="right">
+# mktrans
 
 Convert images into shaped transparent pngs by floodfilling the
 background with transparency (antialiased alpha channel).
