@@ -125,9 +125,9 @@ the start points of the image.
   (Should this be done automatically if the image already has
   transparency? Yuck, more complexity.)
 
-  See the astrolabe example where running mktrans a second time on a
-    specific pixel requires the use of -S so as to not cause the image
-    to be eroded.
+  See the [astrolabe](astrolabe.md) example where running mktrans a
+  second time on a specific pixel requires the use of -S so as to
+  not cause the image to be eroded.
     
             mktrans a.png
             mktrans -p 258,54 a-transparent.png
@@ -135,14 +135,15 @@ the start points of the image.
             mktrans -S -p 258,54 a-transparent.png
             mv a-transparent-transparent.png a-transparent-transparent' with -S).png
 
-* Todo: put the astrolabe example on imgur instead of in github so
-  people don't have to download the image when they checkout this
-  repository.
-
 * Finding the coordinates for -p is a pain. (Tip: middle click on
   image when viewing with `display`). It'd be nice if there was a -P
   option which let the user click on a point (or multiple points) in
   the image to start the floodfill.
+
+* Instead of choosing coordinates, we could use ImageMagick's
+  connected components labeling (blob extraction) to give people a
+  choice of which lagoons to fill. 
+
 
 ## See Also
 
