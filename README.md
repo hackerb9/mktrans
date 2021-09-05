@@ -1,19 +1,19 @@
 # mktrans
 
-    Convert images into shaped transparent pngs by floodfilling the
-    background with transparency (antialiased alpha channel).
+Convert images into shaped transparent pngs by floodfilling the
+background with transparency (antialiased alpha channel).
 
-    Top left pixel is assumed to be the background color and floodfill
-    is from image edges, unless a different starting pixel is specified.
+Top left pixel is assumed to be the background color and floodfill
+is from image edges, unless a different starting pixel is specified.
 
 ## Example
 
 This program is meant to be quick and simple to use, so most of the
-time simply specifying a filename, such as `foo.jpg`, is all you need.
+time simply specifying a filename, such as foo.jpg, is all you need.
 
     mktrans foo.jpg
 
-(Result will be in `foo-transparent.png`.)
+(Result will be in foo*-transparent.png*.)
 
 If too much or too little of the image is turning transparent, you can
 specify a different "fuzz" factor.
