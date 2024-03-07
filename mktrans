@@ -63,6 +63,13 @@ EOF
     exit 0
 }
 
+# Work around MS Windows having a program called "convert".
+if [[ "$COMSPEC" ]]; then
+    shopt -s expand_aliases	   # Allow aliases to workaround quirks.
+    alias convert="magick convert" # Shun MS Windows' "convert" command.
+fi
+
+
 fuzz=$defaultfuzz
 pixelcomma="0,0"
 pixelplus="+0+0"
